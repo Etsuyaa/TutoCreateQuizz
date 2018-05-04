@@ -1,4 +1,4 @@
-Système d'authentification / enregistrement de membres pour le projet Symfony Quiz.
+Système d'authentification / enregistrement avec un accès admin pour le projet Symfony Quiz.
 
 Prérequis :
         "php": ">=5.5.9",
