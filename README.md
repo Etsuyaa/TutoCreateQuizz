@@ -14,7 +14,7 @@ Pour installer ce repo, il suffit de cloner le dossier à la racine de votre web
 2. Lancer la commande composer pour mettre à jour votre dossier vendor :
 
 ```php
-composer update
+composer install
 ```
 
 3. Lancer le webserveur via :
