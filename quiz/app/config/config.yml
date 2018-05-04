@@ -6,11 +6,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -62,6 +62,52 @@ doctrine:
 swiftmailer:
     transport: '%mailer_transport%'
     host: '%mailer_host%'
+    port: 465
     username: '%mailer_user%'
     password: '%mailer_password%'
+    encryption: ssl
     spool: { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: "noreply@monsiteweb.com"
+        sender_name: "FOSUserBundle"
+    service:
+        mailer: fos_user.mailer.twig_swift
+    registration:
+        confirmation:
+            enabled: true
+            from_email: 
+                address: noreply@monsiteweb.com
+                sender_name: Adim of My Quizz
+            template: 'email/registration.email.twig'
+
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            logout:     true
+            anonymous:  true
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTIFICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTIFICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTIFICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
