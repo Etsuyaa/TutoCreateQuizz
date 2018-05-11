@@ -85,29 +85,10 @@ fos_user:
                 sender_name: Adim of My Quizz
             template: 'email/registration.email.twig'
 
-security:
-    encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
-
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
-
-    providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
-
-    firewalls:
-        dev:
-            pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-            logout:     true
-            anonymous:  true
-
-    access_control:
-        - { path: ^/login$, role: IS_AUTHENTIFICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTIFICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTIFICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+easy_admin:
+    entities:
+        # change the following to the namespaces of your own entities
+        - AppBundle\Entity\User
+        - AppBundle\Entity\Categorie
+        - AppBundle\Entity\Question
+        - AppBundle\Entity\Reponse
