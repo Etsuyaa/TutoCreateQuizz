@@ -3,6 +3,8 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
+            <a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a>
+            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
             <div id="welcome">
                 <h1><span>Welcome to My Trololo</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
             </div>
